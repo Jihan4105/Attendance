@@ -1,12 +1,19 @@
 ﻿<div id="lectureSearching">
-    <h2>
-        강의검색
-        <input type="text" style="ime-mode:inactive;"/><button type="submit" name="search_button"><i class="fa fa-search"></i></button>
+    <div class="search_navbar">
+        <span class="searchspan">
+            강의검색
+        </span>
+        <div class="input-group mb-3" id="searchbar">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Go</button>
+            </div>
+        </div>
         <button type="button" class="btn btn-secondary" id="buttonfix" onclick="LectureSelectFix();">수정</button>
         <button type="button" class="btn btn-danger" id="buttonfix" onclick="LectureSelectDelete();">삭제</button>
         <button type="button" class="btn btn-success" id="buttonfix" onclick="GoAddSite();">등록</button>
-    </h2>
-    <table class="table table-striped" name="lecturelist">
+    </div>
+    <table class="table table-striped">
         <thead style="background-color: lightgray">
             <tr>
                 <th>No.</th>
@@ -15,26 +22,26 @@
                 <th>강사</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
+        <tbody id="lecturelist">
+            <tr class="colorchange">
                 <td>1.<input type="checkbox" id="no1" name="no" value="lol"></td>
                 <td>협곡학개론</td>
                 <td>월,수,금/12:00 ~ 13:50</td>
                 <td>이정한</td>
             </tr>
-            <tr>
+            <tr class="colorchange">
                 <td>2.<input type="checkbox" id="no2" name="no" value="english"></td>
                 <td>영어</td>
                 <td>화,목/15:00 ~ 17:00</td>
                 <td>장동건</td>
             </tr>
-            <tr>
+            <tr class="colorchange">
                 <td>3.<input type="checkbox" id="no3" name="no" value="korean"></td>
                 <td>국어</td>
                 <td>토,일/14:00 ~ 15:00</td>
                 <td>유아인</td>
             </tr>
-            <tr>
+            <tr class="colorchange">
                 <td>4.<input type="checkbox" id="no4" name="no" value="Bike"></td>
                 <td>생명과학</td>
                 <td>금/16:00 ~ 17:50</td>
