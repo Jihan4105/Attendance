@@ -1,22 +1,32 @@
 ﻿function LectureSelectFix() {
-    var isNumberChk = $("input:checkbox[name=no]").is(":checked");
-    if (!isNumberChk) {
-        alert("수정할 항목을 선택해주세요.");
-    }
-    else {
-        var checkedStates = [$("#no1").is(":checked"), $("#no2").is(":checked"), $("#no3").is(":checked"), $("#no4").is(":checked")];
-        var alerts=[];
-        for (var i = 0; i < length.alerts; i++) {
-            if (checkedStates[i] == true) {
-                alerts.push(i + 1);
+    var deferred = $.Deferred();
+    $.ajax({
+        url: "./WebService/WebService.asmx/HelloWorld",
+        data: {},
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            var html = "";
+            for (var i = 0; i < 10;i++) {
+                html += '<tr>'
+                html += '<td>' + items[No].No + '</td>'
+                html += '<td>' + items[No].className + '</td>'
+                html += '<td>' + items[No].time + '</td>'
+                html += '<td>' + items[No].proFessor + '</td>'
+                html += '</tr>'
             }
+            html += '</tbody>' + '</table>'
+            $("#lecturelist").empty();
+            $("#lecturelist").append(html);
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
         }
-        alert(alerts + "번 을 선택하셨습니다");
-        GoFixSite();
-    }
+    });
 }
 
-function LectureSelectDelete(){
+function LectureSelectDelete() {
     var isNumberChk = $("input:checkbox[name=no]").is(":checked");
     if (!isNumberChk) {
         alert("삭제할 항목을 선택해주세요.");

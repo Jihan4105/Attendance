@@ -13,40 +13,18 @@
         <button type="button" class="btn btn-danger" id="buttonfix" onclick="LectureSelectDelete();">삭제</button>
         <button type="button" class="btn btn-success" id="buttonfix" onclick="GoAddSite();">등록</button>
     </div>
-    <table class="table table-striped">
-        <thead style="background-color: lightgray">
-            <tr>
-                <th>No.</th>
-                <th>과목</th>
-                <th>강의시간</th>
-                <th>강사</th>
-            </tr>
-        </thead>
-        <tbody id="lecturelist">
-            <tr class="colorchange">
-                <td>1.<input type="checkbox" id="no1" name="no" value="lol"></td>
-                <td>협곡학개론</td>
-                <td>월,수,금/12:00 ~ 13:50</td>
-                <td>이정한</td>
-            </tr>
-            <tr class="colorchange">
-                <td>2.<input type="checkbox" id="no2" name="no" value="english"></td>
-                <td>영어</td>
-                <td>화,목/15:00 ~ 17:00</td>
-                <td>장동건</td>
-            </tr>
-            <tr class="colorchange">
-                <td>3.<input type="checkbox" id="no3" name="no" value="korean"></td>
-                <td>국어</td>
-                <td>토,일/14:00 ~ 15:00</td>
-                <td>유아인</td>
-            </tr>
-            <tr class="colorchange">
-                <td>4.<input type="checkbox" id="no4" name="no" value="Bike"></td>
-                <td>생명과학</td>
-                <td>금/16:00 ~ 17:50</td>
-                <td>황정민</td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="tablecontents">
+        <table class="table table-striped">
+            <thead style="background-color: lightgray">
+                <tr>
+                    <th>No.</th>
+                    <th>과목</th>
+                    <th>강의시간</th>
+                    <th>강사</th>
+                </tr>
+            </thead>
+            <tbody id="lecturelist">
+            </tbody>
+        </table>
+    </div>
 </div>

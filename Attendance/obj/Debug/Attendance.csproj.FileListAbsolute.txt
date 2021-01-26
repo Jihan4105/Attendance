@@ -175,3 +175,5 @@ C:\Project\Attendances\Attendance\obj\Debug\Attendance.csproj.CoreCompileInputs.
 C:\Project\Attendances\Attendance\obj\Debug\Attendance.csproj.CopyComplete
 C:\Project\Attendances\Attendance\obj\Debug\Attendance.dll
 C:\Project\Attendances\Attendance\obj\Debug\Attendance.pdb
+C:\Project\Attendances\Attendance\bin\Newtonsoft.Json.dll
+C:\Project\Attendances\Attendance\bin\Newtonsoft.Json.xml
