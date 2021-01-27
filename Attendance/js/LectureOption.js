@@ -26,7 +26,8 @@
 }
 
 function DeleteButton() {
-    /*var isNumChk = $("input:checkbox[name='no[]']").is(":checked");
+    var isNumChk = $("input:checkbox[name='no[]']").is(":checked");
+    var my_tbody = document.getElementById("lecturelist");
     var arr_num = document.getElementsByName("no[]");
     if (!isNumChk) {
         alert("한개 이상의 삭제할 항목을 선택해 주십시오.");
@@ -35,16 +36,10 @@ function DeleteButton() {
     else {
         for (var i = 0; i < arr_num.length; i++) {
             if (arr_num[i].checked == true) {
-                $.ajax({
-                    url: './WebService/WebService.asmx/HelloWorld' ,
-                    type: "GET",
-                    dataType: "JSON"
-                }).done(function (response) {
-                    $(this).parents+
-                });
+                my_tbody.deleteRow(my_tbody.rows.i);
             }
         }
-    }*/
+    }
 }
 function GoFixSite() {
     $("#mainBase").load("./html/lecture_Fixpage.html #lecturefix");
