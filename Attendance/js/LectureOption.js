@@ -55,3 +55,16 @@ function GoFixSite() {
 function GoAddSite() {
     $("#mainBase").load("./html/lecture_AddPage.html #lectureadd")
 }
+
+function AddTableRow() {
+    var nom = document.getElementsByName("no");
+    var html;
+    html += '<tr>';
+    html += '<td class="row-id">' + nom.length + '.' + '<input type="checkbox" name="no">' + '</td>';
+    html += '<td>' + document.getElementById("subject") + '</td>';
+    html += '<td>' + document.getElementById("times") + '</td>';
+    html += '<td>' + document.getElementById("person") + '</td>';
+    html += '</tr>';
+    $("#lecturelist").append(html);
+    alert("추가되었습니다!");
+}
