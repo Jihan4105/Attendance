@@ -50,5 +50,70 @@ namespace Attendance.WebService
             Context.Response.Write(json.ToString());
         }
 
+        [WebMethod]
+        public void lecture_delete(int classNo)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "DELETE class where no=" + classNo.ToString();
+
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void lecture_add(string sub,string time,string person)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "INSERT into class (className, proFessor, time) " +
+                "values ('" + sub + "', '" + person + "', " + int.Parse(time) + ")";
+
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void lecture_fix(string num,string sub, string time, string person)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "update class set className= '" + sub + "', time= " + int.Parse(time) + ", proFessor= '" + person + "' where no="+int.Parse(num);
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
     }
 }

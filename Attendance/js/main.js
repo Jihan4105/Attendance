@@ -35,5 +35,7 @@ function submenuShowHide() {
 }
 
 function LectureSearch() {
-    $("#mainBase").load("./html/lecture_Search.html #lectureSearching");
+    $("#mainBase").load("./html/lecture_Search.html #lectureSearching", function () {
+        LectureLookup();
+    });
 }
