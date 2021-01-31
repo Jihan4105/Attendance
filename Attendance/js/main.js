@@ -25,7 +25,7 @@ function sideNavShowHide() {
 }
 
 function submenuShowHide() {
-    $("#dropdown-btn").toggleClass("active");
+    //$("#dropdown-btn").toggleClass("active");
     var dropdownContent = $("#dropdown-container");
     if (dropdownContent[0].style.display === "block") {
         dropdownContent[0].style.display = "none";
@@ -37,5 +37,11 @@ function submenuShowHide() {
 function LectureSearch() {
     $("#mainBase").load("./html/lecture_Search.html #lectureSearching", function () {
         LectureLookup();
+    });
+}
+
+function LectureSchedule() {
+    $("#mainBase").load("./html/lecture_Schedule.html #schedule_page", function () {
+        ScheduleLookup();
     });
 }

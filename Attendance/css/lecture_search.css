@@ -1,6 +1,6 @@
 ﻿#buttons {
     margin: 16px 0px 0px 5px;
-    float: left;
+    float: right;
 }
 
 .searchspan {
@@ -17,4 +17,8 @@
 tr.colorchange:hover td {
     background-color: #99ffff;
     color: white;
+}
+
+select option[disabled]:first-child{
+    display: none;
 }

@@ -1,0 +1,35 @@
+﻿<div id="schedule_page">
+    <div>
+        강의일정
+        <select class="form-control" id="sel1" name="sellist1" style="float:left" onchange="SelectLecture(this)">
+        </select>
+    </div>
+    <div id="tablecontents">
+        <table class="table table-striped">
+            <thead style="background-color: lightgray">
+                <tr>
+                    <th>선택</th>
+                    <th>날짜</th>
+                    <th>시간</th>
+                </tr>
+            </thead>
+            <tbody id="schedulelist">
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 d-inline-flex">
+            <label style="width: 80px;" for="usr">날짜:</label>&nbsp
+            <input type="text" class="form-control" id="schedule_date">
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <label style="width: 80px;" for="usr">시간:</label>&nbsp
+            <input type="text" class="form-control" id="schedule_time">
+        </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-primary" onclick="ScheduleAdd()">등록</button>
+            <button type="button" class="btn btn-primary">수정</button>
+            <button type="button" class="btn btn-secondary">삭제</button>
+        </div>
+    </div>
+</div>

@@ -26,7 +26,7 @@ function LectureLookup() {
             var html = "";
             for (No in result.items) {
                 html += '<tr>';
-                html += '<td class="row-id">' + result.items[No].No + '.' + '<input type="checkbox" data-no="' + result.items[No].No + '" name="no">' + '</td>';
+                html += '<td class="row-id">' + '<input type="checkbox" data-no="' + result.items[No].No + '" name="no">' + '</td>';
                 html += '<td>' + result.items[No].className + '</td>';
                 html += '<td>' + result.items[No].time + '</td>';
                 html += '<td>' + result.items[No].proFessor + '</td>';
@@ -75,7 +75,11 @@ function DeleteButton() {
 }
 
 function GoFixSite() {
-    $("#mainBase").load("./html/lecture_Fixpage.html #lecturefix");
+    $("#mainBase").load("./html/lecture_Fixpage.html #lecturefix", function () {
+        $("#subject_fix").val($("#tmpStorage").data("subject"));
+        $("#times_fix").val($("#tmpStorage").data("time"));
+        $("#person_fix").val($("#tmpStorage").data("person"));
+    });
 }
 
 function GoAddSite() {
@@ -93,9 +97,9 @@ function AddTableRow() {
 }
 
 function FixTableRow() {
-    var sub = $("#subject").val();
-    var time = $("#times").val();
-    var per = $("#person").val();
+    var sub = $("#subject_fix").val();
+    var time = $("#times_fix").val();
+    var per = $("#person_fix").val();
     Fixing(arry[0], sub, time, per)
         .done(function () {
             alert("수정되었습니다!");
@@ -167,15 +171,14 @@ function Fixing(num, sub, time, per) {
     });
     return deferred.promise();
 }
-
 function UpdatePage() {
     var my_tbody = document.getElementById("lecturelist");
     var nom = document.getElementsByName("no");
     for (var i = 0, k = 0; i < nom.length; i++) {
         if (nom[i].checked == true) {
-            $("#subject").attr("placeholder", table[i].className);
-            $("#times").attr("placeholder", table[i].time);
-            $("#person").attr("placeholder", table[i].proFessor);
+            $("#tmpStorage").data("subject",table[i].className);
+            $("#tmpStorage").data("time", table[i].time);
+            $("#tmpStorage").data("person", table[i].proFessor);
             arry[k] = nom[i].dataset.no;
             k++;
         }
@@ -190,4 +193,8 @@ function UpdatePage() {
         return false;
     }
     GoFixSite();
+}
+
+function ShowPopup() {
+    $('[data-toggle="popover"]').popover();
 }

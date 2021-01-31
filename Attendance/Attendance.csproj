@@ -74,8 +74,10 @@
     <Content Include="css\lecture_search.css" />
     <Content Include="html\lecture_AddPage.html" />
     <Content Include="html\lecture_Fixpage.html" />
+    <Content Include="html\lecture_Schedule.html" />
     <Content Include="html\lecture_Search.html" />
     <Content Include="index.html" />
+    <Content Include="js\LectureSchedule.js" />
     <Content Include="js\LectureOption.js" />
     <Content Include="js\main.js" />
     <Content Include="Web.config" />

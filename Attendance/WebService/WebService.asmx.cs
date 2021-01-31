@@ -115,5 +115,83 @@ namespace Attendance.WebService
             json.Add("status", status);
             Context.Response.Write(json.ToString());
         }
+
+        [WebMethod]
+        public void ScheduleTable()
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray scheduleitems = new JArray();
+            JObject json = new JObject();
+            string sql = "SELECT No, className from class";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["No"] = rdr["No"].ToString();
+                obj["className"] = rdr["className"].ToString();
+                scheduleitems.Add(obj);
+            }
+            json.Add("scheduleitems", scheduleitems);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void SearchclassSchedule(string classno)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray scheduleitems = new JArray();
+            JObject json = new JObject();
+            string sql = "select classNo, date, time from classSchedule where classNo="+classno;
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["classNo"] = rdr["classNo"].ToString();
+                obj["date"] = rdr["date"].ToString();
+                obj["time"] = rdr["time"].ToString();
+                scheduleitems.Add(obj);
+            }
+            json.Add("scheduleitems", scheduleitems);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void reScheduling(string no,string date, string time)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "INSERT into classSchedule (classNo, date, time) " +
+                "values ('" + int.Parse(no) + "','" + date + "', " + time + ")";
+
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
     }
 }
