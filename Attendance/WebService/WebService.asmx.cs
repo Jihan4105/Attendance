@@ -217,33 +217,26 @@ namespace Attendance.WebService
             Context.Response.Write(json.ToString());
         }
 
-        /*[WebMethod]
-        public void TakeScheduleTable()
+        [WebMethod]
+        public void DeleteSchedule(string id)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             con.Open();
-            JArray scheduleitems = new JArray();
             JObject json = new JObject();
-            string sql = "SELECT id, classNo, date, time from classSchedule";
+            string status = "success";
+
+            string sql = "DELETE classSchedule where id=" + int.Parse(id);
+
             cmd.CommandText = sql;
             cmd.CommandType = System.Data.CommandType.Text;
 
-            SqlDataReader rdr = cmd.ExecuteReader();
+            cmd.ExecuteNonQuery();
 
-            while (rdr.Read())
-            {
-                JObject obj = new JObject();
-                obj["classNo"] = rdr["classNo"].ToString();
-                obj["id"] = rdr["id"].ToString();
-                obj["date"] = rdr["date"].ToString();
-                obj["time"] = rdr["time"].ToString();
-                scheduleitems.Add(obj);
-            }
-            json.Add("scheduleitems", scheduleitems);
+            json.Add("status", status);
             Context.Response.Write(json.ToString());
-        }*/
+        }
     }
 }
