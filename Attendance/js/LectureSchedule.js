@@ -1,4 +1,5 @@
 ﻿/*var scheduletable;
+userless things//
 $(document).ready(function () {
     var deferred = $.Deferred();
     $.ajax({
