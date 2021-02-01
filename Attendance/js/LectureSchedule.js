@@ -1,4 +1,23 @@
-﻿function ScheduleLookup() {
+﻿/*var scheduletable;
+$(document).ready(function () {
+    var deferred = $.Deferred();
+    $.ajax({
+        url: "./WebService/WebService.asmx/TakeScheduleTable",
+        data: {},
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            scheduletable = result.scheduleitems;
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
+        }
+    });
+    return deferred.promise();
+});*/
+
+function ScheduleLookup() {
     var deferred = $.Deferred();
     $.ajax({
         url: "./WebService/WebService.asmx/ScheduleTable",
@@ -37,10 +56,11 @@ function SearchclassSchedule(no) {
         dataType: "json",
         method: "post",
         success: function (result) {
+            scheduletable = result.scheduleitems;
             var html = "";
             for (classNo in result.scheduleitems) {
                 html += '<tr>';
-                html += '<td class="row-id">' + '<input class="schedulechk" name="schedulechk" type="checkbox" data-no="' + result.scheduleitems[classNo].classNo + '" data-date="' + result.scheduleitems[classNo].date + '" data-time="' + result.scheduleitems[classNo].time +'" name="no" onchange="EditScheduleInput(this)">' + '</td>';
+                html += '<td class="row-id">' + '<input class="schedulechk" name="schedulechk" type="checkbox" data-no="' + result.scheduleitems[classNo].classNo + '" data-date="' + result.scheduleitems[classNo].date + '" data-time="' + result.scheduleitems[classNo].time +'" data-id="'+result.scheduleitems[classNo].id+'" name="no" onchange="EditScheduleInput(this)">' + '</td>';
                 html += '<td>' + result.scheduleitems[classNo].date + '</td>';
                 html += '<td>' + result.scheduleitems[classNo].time + '</td>';
                 html += '</tr>';
@@ -99,6 +119,7 @@ function EditScheduleInput(chk) {
         });
         chk.checked = true;
         lastselectedChkNo = $(chk).data("no");
+        id = $(chk).data("id");
         var date = $(chk).data("date");
         var time = $(chk).data("time");
         $("#schedule_date").val(date);
@@ -109,16 +130,43 @@ function EditScheduleInput(chk) {
         $("#schedule_time").val("");
     }
 }
-
+var id;
 function FixScheduleRow() {
     var date = $("#schedule_date").val();
     var time = $("#schedule_time").val();
-    Fixing(sub, time, per)
+    var no = $("#sel1 option:selected").data("no");
+    FixingSchedule(id, lastselectedChkNo, date, time)
         .done(function () {
             alert("수정되었습니다!");
-            LectureSearch();
+            SearchclassSchedule(no);
         })
         .fail(function () {
             alert("실폐하였습니다.");
         });
+}
+
+function FixingSchedule(id, lastselectedChkNo, date, time) {
+    var deferred = $.Deferred();
+    $.ajax({
+        url: "./WebService/WebService.asmx/Schedule_Fix",
+        data: {
+            id: id,
+            classNo: lastselectedChkNo,
+            date: date,
+            time: time
+        },
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
+        }
+    });
+    return deferred.promise();
+}
+
+function DeleteScheduleRow() {
+
 }
