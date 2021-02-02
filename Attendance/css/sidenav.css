@@ -2,7 +2,7 @@
     font-family: "Lato", sans-serif;
 }
 /* Fixed sidenav, full height */
-.sidenav {
+.sidenav_class {
     height: 100%;
     width: 200px;
     position: fixed;
@@ -15,7 +15,7 @@
 }
 
     /* Style the sidenav links and the dropdown button */
-    .sidenav a, .dropdown-btn {
+    .sidenav_class a, .dropdown-btn {
         padding: 6px 8px 6px 16px;
         text-decoration: none;
         font-size: 20px;
@@ -30,12 +30,12 @@
     }
 
         /* On mouse-over */
-        .sidenav a:hover, .dropdown-btn:hover {
+        .sidenav_class a:hover, .dropdown-btn:hover {
             color: #f1f1f1;
         }
 
 /* Main content */
-.main {
+.main_class {
     margin-left: 200px; /* Same as the width of the sidenav */
     margin-bottom: 20px;
     font-size: 20px; /* Increased text to enable scrolling */

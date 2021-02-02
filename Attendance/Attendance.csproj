@@ -70,16 +70,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\sidenav.css" />
-    <Content Include="css\lecture_search.css" />
-    <Content Include="html\lecture_AddPage.html" />
-    <Content Include="html\lecture_Fixpage.html" />
-    <Content Include="html\lecture_Schedule.html" />
-    <Content Include="html\lecture_Search.html" />
+    <Content Include="css\Sidenav.css" />
+    <Content Include="css\Lecture_Search.css" />
+    <Content Include="html\Lec_Register_Page.html" />
+    <Content Include="html\Lec_Fix_Page.html" />
+    <Content Include="html\Lec_Schedule_Page.html" />
+    <Content Include="html\Lec_Search_Page.html" />
     <Content Include="index.html" />
-    <Content Include="js\LectureSchedule.js" />
-    <Content Include="js\LectureOption.js" />
-    <Content Include="js\main.js" />
+    <Content Include="js\Lecture_Schedule_RFS_Options.js" />
+    <Content Include="js\Lecture_RFS_Options.js" />
+    <Content Include="js\Main.js" />
     <Content Include="Web.config" />
     <Content Include="WebService\WebService.asmx" />
   </ItemGroup>

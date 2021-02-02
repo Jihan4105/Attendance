@@ -21,7 +21,7 @@ namespace Attendance.WebService
     {
 
         [WebMethod]
-        public void HelloWorld()
+        public void Lec_Lookup()
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -51,7 +51,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void lecture_delete(int classNo)
+        public void Lec_Delete(int classNo)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -73,7 +73,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void lecture_add(string sub,string time,string person)
+        public void Lec_Register(string sub,string time,string person)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -96,7 +96,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void lecture_fix(string num,string sub, string time, string person)
+        public void Lec_Fix(string num,string sub, string time, string person)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -117,7 +117,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void ScheduleTable()
+        public void Lec_Schedule_Class_Lookup()
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -144,7 +144,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void SearchclassSchedule(string classno)
+        public void Lec_Schedule_Lookup(string classno)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -173,7 +173,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void reScheduling(string no,string date, string time)
+        public void Sch_Register(string no,string date, string time)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -196,7 +196,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void Schedule_Fix(string id,string classNo,string date,string time)
+        public void Sch_Fix(string id,string classNo,string date,string time)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -218,7 +218,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void DeleteSchedule(string id)
+        public void Sch_Delete(string id)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);

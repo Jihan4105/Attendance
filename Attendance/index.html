@@ -6,33 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
-    <link rel="stylesheet" href="./css/sidenav.css">
-    <link rel="stylesheet" href="./css/lecture_search.css">
-    <script src="./js/main.js"></script>
-    <script src="./js/LectureOption.js"></script>
-    <script src="./js/LectureSchedule.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.5/css/dx.common.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.5/css/dx.light.css" />
+    <script src="https://cdn3.devexpress.com/jslib/20.2.5/js/dx.all.js"></script>
+
+    <link rel="stylesheet" href="./css/Sidenav.css">
+    <link rel="stylesheet" href="./css/Lecture_seach.css">
+    <script src="./js/Main.js"></script>
+    <script src="./js/Lecture_RFS_Options.js"></script>
+    <script src="./js/Lecture_Schedule_RFS_Options.js"></script>
 </head>
 <body>
-    <nav id="topNav" class="navbar navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
+    <nav id="topnav_id" class="navbar navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
         <span><i class="fa fa-bar-chart" style="font-size: 20px; color: white;"></i></span>&nbsp;&nbsp;&nbsp;
         <a class="navbar-brand" style="float: left; font-size: 24px; font-weight: bold;">전자출결관리시스템</a>
-        <button class="navbar-toggler" type="button" onclick="sideNavShowHide()">
+        <button class="navbar-toggler" type="button" onclick="Sidenav_Show_Hide()">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div id="tmpStorage" hidden></div>
+        <div id="tmp_storage_id" hidden></div>
     </nav>
-    <div id="sideNav" class="sidenav">
-        <button id="dropdown-btn" class="dropdown-btn" onclick="submenuShowHide()">
+    <div id="sidenav_id" class="sidenav_class">
+        <button id="dropdown-btn" class="dropdown-btn" onclick="Submenu_Show_Hide()">
             강의관리<i class="fa fa-caret-down"></i>
         </button>
         <div id="dropdown-container" class="dropdown-container">
-            <a href="#" onclick="LectureSearch()">강의 검색</a>
-            <a href="#" onclick="GoAddSite()">강의 등록</a>
-            <a href="#" onclick="LectureSchedule()">강의 일정</a>
+            <a href="#" onclick="Lec_Search_Href()">강의 검색</a>
+            <a href="#" onclick="Lec_Register_Href()">강의 등록</a>
+            <a href="#" onclick="Lec_Schedule_Href()">강의 일정</a>
         </div>
         <a href="#services">출결관리</a>
         <a href="#clients">Client</a>
@@ -40,8 +45,8 @@
         <a href="#contact">Search</a>
     </div>
 
-    <div class="main">
-        <div id="mainBase">
+    <div class="main_class">
+        <div id="main_base_id">
             <h2>메뉴를 선택했을 때, 컨텐츠가 디스플레이 되는 영역 !!</h2>
             <br />
             <p>메뉴를 선택하면 각 메뉴에 적합한 GUI가 나타나게 한다.</p>

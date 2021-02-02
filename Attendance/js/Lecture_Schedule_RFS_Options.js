@@ -1,17 +1,17 @@
-﻿function ScheduleLookup() {
+﻿function Lec_Schedule_Class_Lookup() {
     var deferred = $.Deferred();
     $.ajax({
-        url: "./WebService/WebService.asmx/ScheduleTable",
+        url: "./WebService/WebService.asmx/Lec_Schedule_Class_Lookup",
         data: {},
         dataType: "json",
         method: "post",
         success: function (result) {
             var html = "<option value='' selected disabled>" + "Please select" + "</option>";
             for (No in result.scheduleitems) {
-                html += "<option data-no="+result.scheduleitems[No].No+">" + result.scheduleitems[No].className + "</option>";
+                html += "<option data-no=" + result.scheduleitems[No].No + ">" + result.scheduleitems[No].className + "</option>";
             }
-            $("#sel1").empty();
-            $("#sel1").append(html);
+            $("#sel1_id").empty();
+            $("#sel1_id").append(html);
             deferred.resolve(result);
         },
         error: function (result) {
@@ -21,16 +21,16 @@
     return deferred.promise();
 }
 
-function SelectLecture(sel) {
+function Lec_Class_Select(sel) {
     var val = sel.value;
-    var no = $("#sel1 option:selected").data("no");
-    SearchclassSchedule(no);
+    var no = $("#sel1_id option:selected").data("no");
+    Lec_Schedule_Lookup(no);
 }
 
-function SearchclassSchedule(no) {
+function Lec_Schedule_Lookup(no) {
     var deferred = $.Deferred();
     $.ajax({
-        url: "./WebService/WebService.asmx/SearchclassSchedule",
+        url: "./WebService/WebService.asmx/Lec_Schedule_Lookup",
         data: {
             classno: no
         },
@@ -41,13 +41,13 @@ function SearchclassSchedule(no) {
             var html = "";
             for (classNo in result.scheduleitems) {
                 html += '<tr>';
-                html += '<td class="row-id">' + '<input class="schedulechk" name="schedulechk" type="checkbox" data-no="' + result.scheduleitems[classNo].classNo + '" data-date="' + result.scheduleitems[classNo].date + '" data-time="' + result.scheduleitems[classNo].time +'" data-id="'+result.scheduleitems[classNo].id+'" onchange="EditScheduleInput(this)">' + '</td>';
+                html += '<td class="row-id">' + '<input class="schedulechk" name="schedulechk" type="checkbox" data-no="' + result.scheduleitems[classNo].classNo + '" data-date="' + result.scheduleitems[classNo].date + '" data-time="' + result.scheduleitems[classNo].time + '" data-id="' + result.scheduleitems[classNo].id + '" onchange="Auto_Inputbox_Edit(this)">' + '</td>';
                 html += '<td>' + result.scheduleitems[classNo].date + '</td>';
                 html += '<td>' + result.scheduleitems[classNo].time + '</td>';
                 html += '</tr>';
             }
-            $("#schedulelist").empty();
-            $("#schedulelist").append(html);
+            $("#schedule_list_id").empty();
+            $("#schedule_list_id").append(html);
             deferred.resolve(result);
         },
         error: function (result) {
@@ -57,12 +57,12 @@ function SearchclassSchedule(no) {
     return deferred.promise();
 }
 
-function ScheduleAdd() {
-    var no = $("#sel1 option:selected").data("no");
-    var date = $("#schedule_date").val();
-    var time = $("#schedule_time").val();
+function Lec_Sch_Register() {
+    var no = $("#sel1_id option:selected").data("no");
+    var date = $("#schedule_date_id").val();
+    var time = $("#schedule_time_id").val();
     if (no == undefined) {
-        alert("강의명을 위에서 선택해 주세요!"); 
+        alert("강의명을 위에서 선택해 주세요!");
         return;
     }
     else if (date == "" && time == "") {
@@ -77,22 +77,22 @@ function ScheduleAdd() {
         alert("시간을 넣어주세요!");
         return;
     }
-    reScheduling(no, date, time)
+    Sch_Register(no, date, time)
         .done(function () {
             alert("추가되었습니다!")
-            SearchclassSchedule(no);
-            $("#schedule_date").val("");
-            $("#schedule_time").val("");
+            Lec_Schedule_Lookup(no);
+            $("#schedule_date_id").val("");
+            $("#schedule_time_id").val("");
         })
         .fail(function () {
             alert("Failed");
         });
 }
 
-function reScheduling(no, date, time) {
+function Sch_Register(no, date, time) {
     var deferred = $.Deferred();
     $.ajax({
-        url: "./WebService/WebService.asmx/reScheduling",
+        url: "./WebService/WebService.asmx/Sch_Register",
         data: {
             no: no,
             date: date,
@@ -110,56 +110,64 @@ function reScheduling(no, date, time) {
     return deferred.promise();
 }
 
-var lastselectedChkNo;
-function EditScheduleInput(chk) {
+var global_selected_chk_no;
+function Auto_Inputbox_Edit(chk) {
     if (chk.checked) {
         $('input:checkbox[name="schedulechk"]').each(function () {
             this.checked = false;
         });
         chk.checked = true;
-        lastselectedChkNo = $(chk).data("no");
-        id = $(chk).data("id");
+        global_selected_chk_no = $(chk).data("no");
+        global_chk_id = $(chk).data("id");
         var date = $(chk).data("date");
         var time = $(chk).data("time");
-        $("#schedule_date").val(date);
-        $("#schedule_time").val(time);
+        $("#schedule_date_id").val(date);
+        $("#schedule_time_id").val(time);
     }
     else {
-        $("#schedule_date").val("");
-        $("#schedule_time").val("");
+        $("#schedule_date_id").val("");
+        $("#schedule_time_id").val("");
     }
 }
 
-var id;
-function FixScheduleRow() {
-    var date = $("#schedule_date").val();
-    var time = $("#schedule_time").val();
-    var no = $("#sel1 option:selected").data("no");
+var global_chk_id;
+function Lec_Sch_Fix() {
+    var date = $("#schedule_date_id").val();
+    var time = $("#schedule_time_id").val();
+    var no = $("#sel1_id option:selected").data("no");
     if (no == undefined) {
         alert("강의명을 위에서 선택해 주세요!");
         return;
     }
-    if (!$('input:checkbox[name="schedulechk"]').is(":checked")) {
+    else if (!$('input:checkbox[name="schedulechk"]').is(":checked")) {
         alert("항목을 선택해 주십시오!");
         return;
     }
-    FixingSchedule(id, lastselectedChkNo, date, time)
+    else if (date == "") {
+        alert("날짜를 넣어주세요!");
+        return;
+    }
+    else if (time == "") {
+        alert("시간을 넣어주세요!");
+        return;
+    }
+    Sch_Fix(global_chk_id, global_selected_chk_no, date, time)
         .done(function () {
             alert("수정되었습니다!");
-            SearchclassSchedule(no);
+            Lec_Schedule_Lookup(no);
         })
         .fail(function () {
             alert("실폐하였습니다.");
         });
 }
 
-function FixingSchedule(id, lastselectedChkNo, date, time) {
+function Sch_Fix(global_chk_id, global_selected_chk_no, date, time) {
     var deferred = $.Deferred();
     $.ajax({
-        url: "./WebService/WebService.asmx/Schedule_Fix",
+        url: "./WebService/WebService.asmx/Sch_Fix",
         data: {
-            id: id,
-            classNo: lastselectedChkNo,
+            id: global_chk_id,
+            classNo: global_selected_chk_no,
             date: date,
             time: time
         },
@@ -175,8 +183,8 @@ function FixingSchedule(id, lastselectedChkNo, date, time) {
     return deferred.promise();
 }
 
-function DeleteScheduleRow() {
-    var no = $("#sel1 option:selected").data("no");
+function Lec_Sch_Delete() {
+    var no = $("#sel1_id option:selected").data("no");
     if (no == undefined) {
         alert("강의명을 위에서 선택해 주세요!");
         return;
@@ -185,22 +193,22 @@ function DeleteScheduleRow() {
         alert("항목을 선택해 주십시오!");
         return;
     }
-    DeleteSchedule(id)
+    Sch_Delete(global_chk_id)
         .done(function () {
             alert("삭제되었습니다!");
-            SearchclassSchedule(no);
+            Lec_Schedule_Lookup(no);
         })
         .fail(function () {
             alert("실폐하였습니다.");
         });
 }
 
-function DeleteSchedule(id) {
+function Sch_Delete(global_chk_id) {
     var deferred = $.Deferred();
     $.ajax({
-        url: "./WebService/WebService.asmx/DeleteSchedule",
+        url: "./WebService/WebService.asmx/Sch_Delete",
         data: {
-            id: id
+            id: global_chk_id
         },
         dataType: "json",
         method: "post",
