@@ -16,7 +16,7 @@ $(function () {
     $("#sidenav_id").css("margin-top", $("#topnav_id").outerHeight());
 })();
 
-function sidenav_id_Show_Hide() {
+function Sidenav_Show_Hide() {
     if ($("#sidenav_id").css("display") == "none") {
         $("#sidenav_id").show();
     } else {
@@ -43,11 +43,21 @@ function Lec_Search_Href() {
 function Show_Calender() {
     var deferred = $.Deferred();
     try {
-        $("#schedule_date_id").dxDateBox({
+        /*$("#schedule_datepicker_id").dxDateBox({
+            options: {
+                type: "date",
+                displayFormat: "yyyy-MM-dd",
+                value: new Date("@Model.TransactionsFromDate"),
+                width: "100%"
+            }
+        });*/
+        $("#schedule_datepicker_id").dxDateBox({
+            location: "after",
+            widget: "dxDateBox",
             type: "date",
-            value: new Date(),
+            width: "100%",
             displayFormat: "yyyy-MM-dd",
-            width: "100%"
+            value: new Date()
         });
         deferred.resolve(result);
     }
@@ -60,16 +70,14 @@ function Show_Calender() {
 function Lec_Schedule_Href() {
     $("#main_base_id").load("./html/Lec_Schedule_Page.html #schedule_div_id", function () {
         Lec_Schedule_Class_Lookup();
-        Show_Calender()
-            .done(function () {
-
-            })
-            .fail(function () {
-
-            }),
+        Show_Calender();
     });
 }
 
 function Lec_Register_Href() {
     $("#main_base_id").load("./html/Lec_Register_Page.html #register_div_id");
+}
+
+function Att_Href() {
+    $("#main_base_id").load("./html/Att_Page.html #att_div_id");
 }

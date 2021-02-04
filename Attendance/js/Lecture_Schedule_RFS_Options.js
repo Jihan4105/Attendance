@@ -47,7 +47,7 @@ function Lec_Schedule_Lookup(no) {
                 html += '</tr>';
             }
             $("#schedule_list_id").empty();
-            $("#schedule_list_id").append(html);
+            $("#schedule_list_id").append(html); +
             deferred.resolve(result);
         },
         error: function (result) {
@@ -59,7 +59,9 @@ function Lec_Schedule_Lookup(no) {
 
 function Lec_Sch_Register() {
     var no = $("#sel1_id option:selected").data("no");
-    var date = $("#schedule_date_id").val();
+    var date = $("#schedule_datepicker_id").dxDateBox("instance").option('value');
+    //var date = $("#schedule_date_id").val();
+    //var date = schedule_datepicker_id.GetDate();
     var time = $("#schedule_time_id").val();
     if (no == undefined) {
         alert("강의명을 위에서 선택해 주세요!");

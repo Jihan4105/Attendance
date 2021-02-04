@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="css\Sidenav.css" />
     <Content Include="css\Lecture_Search.css" />
+    <Content Include="html\Att_Page.html" />
     <Content Include="html\Lec_Register_Page.html" />
     <Content Include="html\Lec_Fix_Page.html" />
     <Content Include="html\Lec_Schedule_Page.html" />
