@@ -59,9 +59,12 @@ function Lec_Schedule_Lookup(no) {
 
 function Lec_Sch_Register() {
     var no = $("#sel1_id option:selected").data("no");
-    var date = $("#schedule_datepicker_id").dxDateBox("instance").option('value');
-    //var date = $("#schedule_date_id").val();
-    //var date = schedule_datepicker_id.GetDate();
+    var raw_date = $("#schedule_datepicker_id").dxDateBox("instance").option('value');
+    var month = raw_date.getMonth() + 1;
+    var day = raw_date.getDate();
+    if (month < 10) { month = '0' + month; }
+    if (day < 10) { day = '0' + day;}
+    var date = raw_date.getFullYear() + "-" + month + "-" + day;
     var time = $("#schedule_time_id").val();
     if (no == undefined) {
         alert("강의명을 위에서 선택해 주세요!");
@@ -123,18 +126,23 @@ function Auto_Inputbox_Edit(chk) {
         global_chk_id = $(chk).data("id");
         var date = $(chk).data("date");
         var time = $(chk).data("time");
-        $("#schedule_date_id").val(date);
+        $("#schedule_datepicker_id").val(date);
         $("#schedule_time_id").val(time);
     }
     else {
-        $("#schedule_date_id").val("");
+        $("#schedule_datepicker_id").val("");
         $("#schedule_time_id").val("");
     }
 }
 
 var global_chk_id;
 function Lec_Sch_Fix() {
-    var date = $("#schedule_date_id").val();
+    var raw_date = $("#schedule_datepicker_id").dxDateBox("instance").option('value');
+    var month = raw_date.getMonth() + 1;
+    var day = raw_date.getDate();
+    if (month < 10) { month = '0' + month; }
+    if (day < 10) { day = '0' + day; }
+    var date = raw_date.getFullYear() + "-" + month + "-" + day;
     var time = $("#schedule_time_id").val();
     var no = $("#sel1_id option:selected").data("no");
     if (no == undefined) {
