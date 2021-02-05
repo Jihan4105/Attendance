@@ -22,7 +22,6 @@
 }
 
 function Lec_Class_Select(sel) {
-    var val = sel.value;
     var no = $("#sel1_id option:selected").data("no");
     Lec_Schedule_Lookup(no);
 }

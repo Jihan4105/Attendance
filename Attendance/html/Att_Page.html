@@ -1,3 +1,35 @@
 ﻿<div id="att_div_id">
-    
+    <h2>출석관리</h2>
+    <div class="row">
+        <div class="col-sm-4 d-inline-flex">
+            <label style="width: 80px;" for="usr">과목:</label>&nbsp
+            <select class="form-control" id="att_class_id" name="sellist1" style="float:left" onchange="Att_Class_Select()">
+            </select>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <label style="width: 80px;" for="usr">날짜:</label>&nbsp
+            <select class="form-control" id="att_date_id" name="sellist1" style="float:left" onchange="Lec_Class_Select(this)">
+            </select>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
+            <label style="width: 80px;" for="usr">학생명:</label>&nbsp
+            <select class="form-control" id="att_student_id" name="sellist1" style="float:left" onchange="Lec_Class_Select(this)">
+            </select>
+        </div>
+    </div>
+    <div id="tablecontents">
+        <table class="table table-striped">
+            <thead style="background-color: lightgray">
+                <tr>
+                    <th>과목</th>
+                    <th>날짜</th>
+                    <th>시간</th>
+                    <th>학생명</th>
+                    <th>출석여부</th>
+                </tr>
+            </thead>
+            <tbody id="att_list_id">
+            </tbody>
+        </table>
+    </div>
 </div>

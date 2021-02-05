@@ -78,6 +78,7 @@
     <Content Include="html\Lec_Schedule_Page.html" />
     <Content Include="html\Lec_Search_Page.html" />
     <Content Include="index.html" />
+    <Content Include="js\Attendance_Management.js" />
     <Content Include="js\Lecture_Schedule_RFS_Options.js" />
     <Content Include="js\Lecture_RFS_Options.js" />
     <Content Include="js\Main.js" />

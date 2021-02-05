@@ -238,5 +238,63 @@ namespace Attendance.WebService
             json.Add("status", status);
             Context.Response.Write(json.ToString());
         }
+        [WebMethod]
+        public void Att_Date_Lookup(string no)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray scheduleitems = new JArray();
+            JObject json = new JObject();
+            string sql = "SELECT id, date from classSchedule where classNo ="+ int.Parse(no);
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["id"] = rdr["id"].ToString();
+                obj["date"] = rdr["date"].ToString();
+                scheduleitems.Add(obj);
+            }
+            json.Add("scheduleitems", scheduleitems);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Att_List_Lookup(string no)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray att_list = new JArray();
+            JObject json = new JObject();
+            string sql = "select id, classNo, date, time, student_name, att from Att_Table where classNo='" + int.Parse(no) + "'select className from class where No=" + int.Parse(no);
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["id"] = rdr["id"].ToString();
+                obj["className"] = rdr["className"].ToString();
+                obj["classNo"] = rdr["classNo"].ToString();
+                obj["date"] = rdr["date"].ToString();
+                obj["time"] = rdr["time"].ToString();
+                obj["student_name"] = rdr["student_name"].ToString();
+                obj["att"] = rdr["att"].ToString();
+                att_list.Add(obj);
+            }
+            json.Add("att_list", att_list);
+            Context.Response.Write(json.ToString());
+        }
     }
 }

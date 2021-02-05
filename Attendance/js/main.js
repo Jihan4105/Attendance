@@ -43,14 +43,6 @@ function Lec_Search_Href() {
 function Show_Calender() {
     var deferred = $.Deferred();
     try {
-        /*$("#schedule_datepicker_id").dxDateBox({
-            options: {
-                type: "date",
-                displayFormat: "yyyy-MM-dd",
-                value: new Date("@Model.TransactionsFromDate"),
-                width: "100%"
-            }
-        });*/
         $("#schedule_datepicker_id").dxDateBox({
             location: "after",
             widget: "dxDateBox",
@@ -79,5 +71,7 @@ function Lec_Register_Href() {
 }
 
 function Att_Href() {
-    $("#main_base_id").load("./html/Att_Page.html #att_div_id");
+    $("#main_base_id").load("./html/Att_Page.html #att_div_id", function () {
+        Att_Class_Lookup();
+    });
 }
