@@ -21,7 +21,7 @@
     return deferred.promise();
 }
 
-function Lec_Class_Select(sel) {
+function Lec_Class_Select() {
     var no = $("#sel1_id option:selected").data("no");
     Lec_Schedule_Lookup(no);
 }

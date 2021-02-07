@@ -24,9 +24,9 @@ function Sidenav_Show_Hide() {
     }
 }
 
-function Submenu_Show_Hide() {
+function Submenu_Show_Hide(where) {
     //$("#dropdown-btn").toggleClass("active");
-    var dropdownContent = $("#dropdown-container");
+    var dropdownContent = $(where);
     if (dropdownContent[0].style.display === "block") {
         dropdownContent[0].style.display = "none";
     } else {
@@ -40,18 +40,17 @@ function Lec_Search_Href() {
     });
 }
 
-function Show_Calender() {
+function Show_Calender(where) {
     var deferred = $.Deferred();
     try {
-        $("#schedule_datepicker_id").dxDateBox({
+        $(where).dxDateBox({
             location: "after",
             widget: "dxDateBox",
             type: "date",
-            width: "100%",
             displayFormat: "yyyy-MM-dd",
             value: new Date()
         });
-        deferred.resolve(result);
+        deferred.resolve();
     }
     catch (e){
         deferred.reject();
@@ -62,16 +61,57 @@ function Show_Calender() {
 function Lec_Schedule_Href() {
     $("#main_base_id").load("./html/Lec_Schedule_Page.html #schedule_div_id", function () {
         Lec_Schedule_Class_Lookup();
-        Show_Calender();
+        Show_Calender('#schedule_datepicker_id');
     });
 }
 
-function Lec_Register_Href() {
+function Lec_Register_Href() { 
     $("#main_base_id").load("./html/Lec_Register_Page.html #register_div_id");
+}
+
+function Lec_Learner_Href() {
+    $("#main_base_id").load("./html/Lec_Learner_Page.html #learner_div_id", function () {
+        Lec_Lea_Class_Lookup();
+    });
 }
 
 function Att_Href() {
     $("#main_base_id").load("./html/Att_Page.html #att_div_id", function () {
         Att_Class_Lookup();
+        Show_Calender('#att_from_date_id')
+            .done(function () {
+                //$("#att_from_date_id").dxDateBox("instance").option("width", "60%");
+            });
+        Show_Calender('#att_until_date_id')
+            .done(function () {
+                //$("#att_until_date_id").dxDateBox("instance").option("value", ");
+            });
     });
+}
+
+function Stu_Search_Href() {
+    $("#main_base_id").load("./html/Stu_Search_Page.html #stu_search_div_id", function () {
+        Stu_List_Lookup();
+    });
+}
+
+function Stu_Register_Href() {
+    $("#main_base_id").load("./html/Stu_Register_Page.html #stu_register_div_id");
+}
+
+function Show_Popup_Table() {
+    var deferred = $.Deferred();
+    $.ajax({
+        url: "./WebService/WebService.asmx/Stu_List_Lookup",
+        data: {},
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
+        }
+    });
+    return deferred.promise();
 }

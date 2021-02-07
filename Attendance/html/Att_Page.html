@@ -1,20 +1,25 @@
 ﻿<div id="att_div_id">
-    <h2>출석관리</h2>
+    <h2>출결관리</h2>
     <div class="row">
         <div class="col-sm-4 d-inline-flex">
-            <label style="width: 80px;" for="usr">과목:</label>&nbsp
+            <label style="width: 80px;" for="usr">과목:</label>&nbsp;
             <select class="form-control" id="att_class_id" name="sellist1" style="float:left" onchange="Att_Class_Select()">
             </select>
         </div>
         <div class="col-sm-4 d-inline-flex">
-            <label style="width: 80px;" for="usr">날짜:</label>&nbsp
-            <select class="form-control" id="att_date_id" name="sellist1" style="float:left" onchange="Lec_Class_Select(this)">
-            </select>
+            <div class="row" >
+                <div class="col-sm-6 d-inline-flex">
+                    From:&nbsp;&nbsp;
+                    <div id="att_from_date_id"></div>
+                </div>
+                <div class="col-sm-6 d-inline-flex">
+                    To:&nbsp;&nbsp;
+                    <div id="att_until_date_id"></div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-4 d-inline-flex">
-            <label style="width: 80px;" for="usr">학생명:</label>&nbsp
-            <select class="form-control" id="att_student_id" name="sellist1" style="float:left" onchange="Lec_Class_Select(this)">
-            </select>
+            <button type="button" class="btn btn-primary" onclick="Att_Lookup_Button()">검색</button>
         </div>
     </div>
     <div id="tablecontents">
@@ -22,6 +27,7 @@
             <thead style="background-color: lightgray">
                 <tr>
                     <th>과목</th>
+                    <th>강사명</th>
                     <th>날짜</th>
                     <th>시간</th>
                     <th>학생명</th>

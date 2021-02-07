@@ -22,12 +22,14 @@
     <link rel="stylesheet" href="./css/Sidenav.css">
     <link rel="stylesheet" href="./css/Lecture_Search.css">
     <script src="./js/Main.js"></script>
-    <script src="./js/Lecture_RFS_Options.js"></script>
+    <script src="./js/Lecture_Management.js"></script>
     <script src="./js/Lecture_Schedule_RFS_Options.js"></script>
     <script src="./js/Attendance_Management.js"></script>
+    <script src="./js/Stu_Management.js"></script>
+    <script src="./js/Common.js"></script>
 </head>
-<body>
-    <nav id="topnav_id" class="navbar navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
+<body id="ProjectBody">
+    <nav id="topnav_id" class="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
         <span><i class="fa fa-bar-chart" style="font-size: 20px; color: white;"></i></span>&nbsp;&nbsp;&nbsp;
         <a class="navbar-brand" style="float: left; font-size: 24px; font-weight: bold;">전자출결관리시스템</a>
         <button class="navbar-toggler" type="button" onclick="Sidenav_Show_Hide()">
@@ -36,16 +38,23 @@
         <div id="tmp_storage_id" hidden></div>
     </nav>
     <div id="sidenav_id" class="sidenav_class">
-        <button id="dropdown-btn" class="dropdown-btn" onclick="Submenu_Show_Hide()">
+        <button id="dropdown-btn" class="dropdown-btn" onclick="Submenu_Show_Hide('#dropdown-container')">
             강의관리<i class="fa fa-caret-down"></i>
         </button>
         <div id="dropdown-container" class="dropdown-container">
             <a href="#" onclick="Lec_Search_Href()">강의 검색</a>
             <a href="#" onclick="Lec_Register_Href()">강의 등록</a>
             <a href="#" onclick="Lec_Schedule_Href()">강의 일정</a>
+            <a href="#" onclick="Lec_Learner_Href()">수강자 관리</a>
         </div>
-        <a href="#services" onclick="Att_Href()">출결관리</a>
-        <a href="#clients">Client</a>
+        <a href="#Attendance_Management" onclick="Att_Href()">출결관리</a>
+        <button id="dropdown-btn" class="dropdown-btn" onclick="Submenu_Show_Hide('#dropdown_stu_management_id')">
+            학생관리<i class="fa fa-caret-down"></i>
+        </button>
+        <div id="dropdown_stu_management_id" class="dropdown-container">
+            <a href="#Student_Search" onclick="Stu_Search_Href()">학생검색</a>
+            <a href="#Student_Register" onclick="Stu_Register_Href()">학생등록</a>
+        </div>
         <a href="#contact">Contact</a>
         <a href="#contact">Search</a>
     </div>
@@ -63,6 +72,5 @@
     <div class="row footer d-flex justify-content-center align-items-center" style="height: 50px; margin-bottom:0">
         @2021 Footer
     </div>
-
 </body>
 </html>

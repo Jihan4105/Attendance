@@ -1,27 +1,20 @@
-﻿function Att_List_Lookup(no) {
+﻿function Att_List_Lookup(no, from_date, until_date) {
     var deferred = $.Deferred();
     $.ajax({
         url: "./WebService/WebService.asmx/Att_List_Lookup",
         data: {
-            no: no
-            /*date: date,
-            time: time,
-            student_name: student_name,*/
+            no: no,
+            from_date: from_date,
+            until_date: until_date
         },
         dataType: "json",
         method: "post",
         success: function (result) {
             var html = "";
             for (var i = 0; i < result.att_list.length;i++) {
-                /*
-                 * <th>과목</th>
-                    <th>날짜</th>
-                    <th>시간</th>
-                    <th>학생명</th>
-                    <th>출석여부</th>
-                 */
                 html += '<tr>';
                 html += '<td>' + result.att_list[i].className + '</td>';
+                html += '<td>' + result.att_list[i].professor + '</td>';
                 html += '<td>' + result.att_list[i].date + '</td>';
                 html += '<td>' + result.att_list[i].time + '</td>';
                 html += '<td>' + result.att_list[i].student_name + '</td>';
@@ -62,39 +55,19 @@ function Att_Class_Lookup() {
     return deferred.promise();
 }
 
-function Att_Class_Select() {
+function Att_Lookup_Button() {
     var no = $("#att_class_id option:selected").data("no");
-    Att_Date_Lookup(no)
-        .done(function () {
-            Att_List_Lookup(no);
-        })
-        .fail(function () {
-            alert("실폐");
-        });
-}
-
-function Att_Date_Lookup(no) {
-    var deferred = $.Deferred();
-    $.ajax({
-        url: "./WebService/WebService.asmx/Att_Date_Lookup",
-        data: {
-            no: no
-        },
-        dataType: "json",
-        method: "post",
-        success: function (result) {
-            var html = "<option value='' selected disabled>" + "Please select" + "</option>";
-            for (var i = 0; i < result.scheduleitems.length; i++) {
-                html += "<option data-date=" + result.scheduleitems[i].date + ">" + result.scheduleitems[i].date + "</option>";
-            }
-            $("#att_date_id").empty();
-            $("#att_date_id").append(html);
-            deferred.resolve(result);
-        },
-        error: function (result) {
-            deferred.reject();
-        }
-    });
-    return deferred.promise();
-
-}
+    var raw_date = $("#att_from_date_id").dxDateBox("instance").option('value');
+    var month = raw_date.getMonth() + 1;
+    var day = raw_date.getDate();
+    if (month < 10) { month = '0' + month; }
+    if (day < 10) { day = '0' + day; }
+    var from_date = raw_date.getFullYear() + "-" + month + "-" + day;
+    var raw_date = $("#att_until_date_id").dxDateBox("instance").option('value');
+    var month = raw_date.getMonth() + 1;
+    var day = raw_date.getDate();
+    if (month < 10) { month = '0' + month; }
+    if (day < 10) { day = '0' + day; }
+    var until_date = raw_date.getFullYear() + "-" + month + "-" + day;
+    Att_List_Lookup(no, from_date, until_date);
+} 

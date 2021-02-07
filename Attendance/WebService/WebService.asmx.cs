@@ -73,7 +73,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void Lec_Register(string sub,string time,string person)
+        public void Lec_Register(string sub, string time, string person)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -96,7 +96,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void Lec_Fix(string num,string sub, string time, string person)
+        public void Lec_Fix(string num, string sub, string time, string person)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -106,7 +106,7 @@ namespace Attendance.WebService
             JObject json = new JObject();
             string status = "success";
 
-            string sql = "update class set className= '" + sub + "', time= " + int.Parse(time) + ", proFessor= '" + person + "' where no="+int.Parse(num);
+            string sql = "update class set className= '" + sub + "', time= " + int.Parse(time) + ", proFessor= '" + person + "' where no=" + int.Parse(num);
             cmd.CommandText = sql;
             cmd.CommandType = System.Data.CommandType.Text;
 
@@ -153,7 +153,7 @@ namespace Attendance.WebService
             con.Open();
             JArray scheduleitems = new JArray();
             JObject json = new JObject();
-            string sql = "select id, classNo, date, time from classSchedule where classNo="+classno;
+            string sql = "select id, classNo, date, time from classSchedule where classNo=" + classno;
             cmd.CommandText = sql;
             cmd.CommandType = System.Data.CommandType.Text;
 
@@ -173,7 +173,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void Sch_Register(string no,string date, string time)
+        public void Sch_Register(string no, string date, string time)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -196,7 +196,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void Sch_Fix(string id,string classNo,string date,string time)
+        public void Sch_Fix(string id, string classNo, string date, string time)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -239,34 +239,7 @@ namespace Attendance.WebService
             Context.Response.Write(json.ToString());
         }
         [WebMethod]
-        public void Att_Date_Lookup(string no)
-        {
-            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            SqlConnection con = new SqlConnection(cs);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            con.Open();
-            JArray scheduleitems = new JArray();
-            JObject json = new JObject();
-            string sql = "SELECT id, date from classSchedule where classNo ="+ int.Parse(no);
-            cmd.CommandText = sql;
-            cmd.CommandType = System.Data.CommandType.Text;
-
-            SqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
-            {
-                JObject obj = new JObject();
-                obj["id"] = rdr["id"].ToString();
-                obj["date"] = rdr["date"].ToString();
-                scheduleitems.Add(obj);
-            }
-            json.Add("scheduleitems", scheduleitems);
-            Context.Response.Write(json.ToString());
-        }
-
-        [WebMethod]
-        public void Att_List_Lookup(string no)
+        public void Att_List_Lookup(string no, string from_date, string until_date)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -275,7 +248,19 @@ namespace Attendance.WebService
             con.Open();
             JArray att_list = new JArray();
             JObject json = new JObject();
-            string sql = "select id, classNo, date, time, student_name, att from Att_Table where classNo='" + int.Parse(no) + "'select className from class where No=" + int.Parse(no);
+            string sql = "select " +
+                            "   A.No, " +
+                            "   A.className, " +
+                            "   A.professor, " +
+                            "   B.date, " +
+                            "   B.time, " +
+                            "   B.student_name, " +
+                            "   B.att " +
+                            "from class as A " +
+                            "   left join Att_table as B " +
+                            "       on A.no = B.classNo " +
+                            "where A.no =" + int.Parse(no) + " and B.date BETWEEN '" + from_date + "' and '" + until_date + "' " +
+                            "order by B.date";
             cmd.CommandText = sql;
             cmd.CommandType = System.Data.CommandType.Text;
 
@@ -284,9 +269,9 @@ namespace Attendance.WebService
             while (rdr.Read())
             {
                 JObject obj = new JObject();
-                obj["id"] = rdr["id"].ToString();
+                obj["No"] = rdr["No"].ToString();
                 obj["className"] = rdr["className"].ToString();
-                obj["classNo"] = rdr["classNo"].ToString();
+                obj["professor"] = rdr["professor"].ToString();
                 obj["date"] = rdr["date"].ToString();
                 obj["time"] = rdr["time"].ToString();
                 obj["student_name"] = rdr["student_name"].ToString();
@@ -294,6 +279,197 @@ namespace Attendance.WebService
                 att_list.Add(obj);
             }
             json.Add("att_list", att_list);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Stu_Register(string stu_name, string stu_identity, string ph)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "INSERT into Stu_Table (stu_name, stu_identity, ph) " +
+                "values ('" + stu_name + "', '" + stu_identity + "', '" + ph + "')";
+
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Stu_List_Lookup()
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray stu_list = new JArray();
+            JObject json = new JObject();
+            string sql = "SELECT stu_name, stu_identity, ph from Stu_Table";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["stu_name"] = rdr["stu_name"].ToString();
+                obj["stu_identity"] = rdr["stu_identity"].ToString();
+                obj["ph"] = rdr["ph"].ToString();
+                stu_list.Add(obj);
+            }
+            json.Add("stu_list", stu_list);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Stu_Delete(string stu_name)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "DELETE Stu_Table where stu_name='" + stu_name + "'";
+
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Stu_Update(string global_old_stu_identity, string stu_name, string stu_identity, string ph)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "update Stu_Table set stu_name= '" + stu_name + "', stu_identity= '" + stu_identity + "', ph= '" + ph + "' where stu_identity='" + global_old_stu_identity + "'";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Lec_Lea_Lookup(string no)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray scheduleitems = new JArray();
+            JObject json = new JObject();
+            string sql = "select " +
+                         "  B.No, " +
+                         "  B.className, " +
+                         "  A.stu_name, " +
+                         "  A.stu_identity " +
+                         "from Learner_Table as A " +
+                         "  left join class as B " +
+                         "      on A.classNo = B.no " +
+                         "where B.no =" + int.Parse(no);
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["No"] = rdr["No"].ToString();
+                obj["className"] = rdr["className"].ToString();
+                obj["stu_name"] = rdr["stu_name"].ToString();
+                obj["stu_identity"] = rdr["stu_identity"].ToString();
+                scheduleitems.Add(obj);
+            }
+            json.Add("scheduleitems", scheduleitems);
+            Context.Response.Write(json.ToString());
+        }
+        [WebMethod]
+        public void Lea_Delete(string stu_name,string no)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            string status = "success";
+
+            string sql = "DELETE Learner_Table where  stu_name='" + stu_name + "' and classNo=" + int.Parse(no);
+
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.ExecuteNonQuery();
+
+            json.Add("status", status);
+            Context.Response.Write(json.ToString());
+        }
+
+
+        [WebMethod]
+        public void Popup_List_Push_Learner(string classNo, string arr_obj)
+        {
+            JArray arrObj = JArray.Parse(arr_obj);
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlTransaction tran = null;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            tran = con.BeginTransaction();
+            JObject json = new JObject();
+            string status = "success";
+            try
+            {
+                for (int i = 0; i < arrObj.Count; i++)
+                {
+                    string sql = "insert into Learner_Table values('" + classNo + "', '" + arrObj[i]["stu_name"].ToString() + "', '" + arrObj[i]["stu_identity"].ToString() + "')";
+
+                    cmd.CommandText = sql;
+                    cmd.CommandType = System.Data.CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+                }
+                tran.Commit();
+            }
+            catch(Exception e) {
+                tran.Rollback();
+            }
+            finally
+            {
+                if (con != null) con.Dispose();
+                if (cmd != null) cmd.Dispose();
+            }
+            json.Add("status", status);
             Context.Response.Write(json.ToString());
         }
     }

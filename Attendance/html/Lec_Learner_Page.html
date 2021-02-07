@@ -1,0 +1,30 @@
+﻿<div id="learner_div_id">
+    <h2>수강자 관리</h2>
+    <div class="row">
+        <div class="col-sm-4 d-inline-flex">
+            <label style="width: 80px;" for="usr">과목:</label>&nbsp;
+            <select class="form-control" id="lea_class_id" name="sellist1" style="float:left" onchange="Lec_Lea_Class_Select()">
+            </select>
+        </div>
+        <div class="col-sm-2 d-inline-flex">
+            <button type="button" class="btn btn-success" onclick="ShowPopup()">추가</button>
+        </div>
+        <div class="col-sm-2 d-inline-flex">
+            <button type="button" class="btn btn-danger" onclick="Lec_Lea_Delete_Button()">삭제</button>
+        </div>
+    </div>
+    <div id="tablecontents">
+        <table class="table table-striped">
+            <thead style="background-color: lightgray">
+                <tr>
+                    <th>선택</th>
+                    <th>과목</th>
+                    <th>수강자</th>
+                    <th>학번</th>
+                </tr>
+            </thead>
+            <tbody id="lea_list_id">
+            </tbody>
+        </table>
+    </div>
+</div>
