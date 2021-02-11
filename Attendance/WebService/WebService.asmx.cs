@@ -472,5 +472,33 @@ namespace Attendance.WebService
             json.Add("status", status);
             Context.Response.Write(json.ToString());
         }
+
+        [WebMethod]
+        public void Login(string email)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray user_list = new JArray();
+            JObject json = new JObject();
+            string sql = "SELECT user_name, email, password from Users where email='" + email + "'";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["user_name"] = rdr["user_name"].ToString();
+                obj["email"] = rdr["email"].ToString();
+                obj["password"] = rdr["password"].ToString();
+                user_list.Add(obj);
+            }
+            json.Add("user_list", user_list);
+            Context.Response.Write(json.ToString());
+        }
     }
 }

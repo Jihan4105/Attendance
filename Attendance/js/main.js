@@ -1,6 +1,12 @@
 ﻿var global_sidenav_idTopPosition;
 
 $(function () {
+    var myStorage = window.localStorage;
+    var user_email = myStorage.getItem("AMS_user_email");
+    if (user_email == null) {
+        $(location).attr('href', './index.html');
+        alert("다시 로그인 하세요");
+    }
     $(window).resize(function () {
         if ($("body").width() <= 576) {
             $("#sidenav_id").hide();
@@ -114,4 +120,10 @@ function Show_Popup_Table() {
         }
     });
     return deferred.promise();
+}
+
+function Logout() {
+    var myStorage = window.localStorage;
+    myStorage.removeItem("AMS_user_email");
+    $(location).attr('href', './index.html');
 }

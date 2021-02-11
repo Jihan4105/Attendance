@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Bootstrap 4 Website Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -10,67 +9,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.5/css/dx.common.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.5/css/dx.light.css" />
-    <script src="https://cdn3.devexpress.com/jslib/20.2.5/js/dx.all.js"></script>
-
-    <script src="https://unpkg.com/devextreme-cldr-data/supplemental.js"></script>
-    <script src="https://unpkg.com/devextreme-cldr-data/de.js"></script>
-    <script src="https://unpkg.com/devextreme-cldr-data/ru.js"></script>
-
-    <link rel="stylesheet" href="./css/Sidenav.css">
-    <link rel="stylesheet" href="./css/Lecture_Search.css">
-    <script src="./js/Main.js"></script>
-    <script src="./js/Lecture_Management.js"></script>
-    <script src="./js/Lecture_Schedule_RFS_Options.js"></script>
-    <script src="./js/Attendance_Management.js"></script>
-    <script src="./js/Stu_Management.js"></script>
-    <script src="./js/Common.js"></script>
+    <script src="./js/index.js"></script>
 </head>
-<body id="ProjectBody">
-    <nav id="topnav_id" class="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
-        <span><i class="fa fa-bar-chart" style="font-size: 20px; color: white;"></i></span>&nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" style="float: left; font-size: 24px; font-weight: bold;">전자출결관리시스템</a>
-        <button class="navbar-toggler" type="button" onclick="Sidenav_Show_Hide()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="tmp_storage_id" hidden></div>
-    </nav>
-    <div id="sidenav_id" class="sidenav_class">
-        <button id="dropdown-btn" class="dropdown-btn" onclick="Submenu_Show_Hide('#dropdown-container')">
-            강의관리<i class="fa fa-caret-down"></i>
-        </button>
-        <div id="dropdown-container" class="dropdown-container">
-            <a href="#" onclick="Lec_Search_Href()">강의 검색</a>
-            <a href="#" onclick="Lec_Register_Href()">강의 등록</a>
-            <a href="#" onclick="Lec_Schedule_Href()">강의 일정</a>
-            <a href="#" onclick="Lec_Learner_Href()">수강자 관리</a>
-        </div>
-        <a href="#Attendance_Management" onclick="Att_Href()">출결관리</a>
-        <button id="dropdown-btn" class="dropdown-btn" onclick="Submenu_Show_Hide('#dropdown_stu_management_id')">
-            학생관리<i class="fa fa-caret-down"></i>
-        </button>
-        <div id="dropdown_stu_management_id" class="dropdown-container">
-            <a href="#Student_Search" onclick="Stu_Search_Href()">학생검색</a>
-            <a href="#Student_Register" onclick="Stu_Register_Href()">학생등록</a>
-        </div>
-        <a href="#contact">Contact</a>
-        <a href="#contact">Search</a>
+<body>
+    <div class="container py-4 px-4 bg-dark">
+        <p style="font-size: 60px; font-weight: bold; color: darkgray;">AMS</p>
+        <p style="color: darkgray;">Attendance Management System <span style="font-size: 10px;">Ver 1.0</span></p>
     </div>
-
-    <div class="main_class">
-        <div id="main_base_id">
-            <h2>메뉴를 선택했을 때, 컨텐츠가 디스플레이 되는 영역 !!</h2>
-            <br />
-            <p>메뉴를 선택하면 각 메뉴에 적합한 GUI가 나타나게 한다.</p>
-            <p>각 기능은 검색, 입력, 수정, 삭제 등이 가능할 수 있다.</p>
-            <p>검색 화면은 그래프, 테이블 등 가능한 시각적으로 판단하기 쉬운 방법을 택한다.</p>
+    <div class="container">
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="remember" onchange="Remember_Button()"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-primary" onclick="Login()">Submit</button>
+            </div>
+            <div class="col-2"></div>
         </div>
-    </div>
-
-    <div class="row footer d-flex justify-content-center align-items-center" style="height: 50px; margin-bottom:0">
-        @2021 Footer
     </div>
 </body>
 </html>
