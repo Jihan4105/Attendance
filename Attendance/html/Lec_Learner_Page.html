@@ -1,16 +1,14 @@
 ﻿<div id="learner_div_id">
-    <h2>수강자 관리</h2>
+    <span style="font-size: 40px;">수강자 관리</span>
     <div class="row">
-        <div class="col-sm-4 d-inline-flex">
-            <label style="width: 80px;" for="usr">과목:</label>&nbsp;
+        <div class="col-sm-6 d-inline-flex">
+            <label style="width: 80px; font-size: 24px;" for="usr">과목:</label>
             <select class="form-control" id="lea_class_id" name="sellist1" style="float:left" onchange="Lec_Lea_Class_Select()">
             </select>
         </div>
-        <div class="col-sm-2 d-inline-flex">
-            <button type="button" class="btn btn-success" onclick="ShowPopup()">추가</button>
-        </div>
-        <div class="col-sm-2 d-inline-flex">
-            <button type="button" class="btn btn-danger" onclick="Lec_Lea_Delete_Button()">삭제</button>
+        <div class="col-sm-6 d-inline-flex flex-row-reverse">
+            <button type="button" class="btn btn-success" style="margin: 0px 0px 10px 5px;" onclick="ShowPopup()">추가</button>
+            <button type="button" class="btn btn-danger" style="margin: 0px 5px 10px 0px;" onclick="Lec_Lea_Delete_Button()">삭제</button>
         </div>
     </div>
     <div id="tablecontents">

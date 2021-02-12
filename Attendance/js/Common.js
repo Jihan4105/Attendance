@@ -51,18 +51,6 @@ function ShowPopup(mode) {
             .done(function (result) {
                 global_stu_table = result.stu_list;
                 var html = "";
-                //html += "<table class='table table-striped'>" +
-                //    "   <thead style='background-color: lightgray'>" +
-                //    "       <tr>" +
-                //    "           <th>체크</th>" +
-                //    "           <th>학생명</th>" +
-                //    "           <th>학번</th>" +
-                //    "           <th>전화번호</th>" +
-                //    "       </tr>" +
-                //    "   </thead>" +
-                //    "   <tbody id='popup_stu_list_id'>" +
-                //    "   </tbody>" +
-                //    "</table>";
                 for (var i = 0; i < result.stu_list.length; i++) {
                     html += '<tr>';
                     html += '<td class="row-id">' + '<input type="checkbox" data-name="' + result.stu_list[i].stu_name + '" name="popup_stu_chklist">' + '</td>';
@@ -143,13 +131,6 @@ function PopupOk() {
             judge = 0;
         }
     }
-    /*for (var i = 0; i < arr.length; i++) {
-        index = global_learner_table.findIndex(x => x.stu_identity === arr[i].stu_identity);
-        if (index != -1) {
-            alert("이미 존재하는 학생입니다!");
-            return;
-        }
-    }*/
     if (judge == 1) {
         alert("삭제할 항목을 선택해 주십시오.");
         return false;
