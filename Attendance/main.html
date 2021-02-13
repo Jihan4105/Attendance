@@ -15,9 +15,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.5/css/dx.light.css" />
     <script src="https://cdn3.devexpress.com/jslib/20.2.5/js/dx.all.js"></script>
 
-    <script src="https://unpkg.com/devextreme-cldr-data/supplemental.js"></script>
+    <!--<script src="https://unpkg.com/devextreme-cldr-data/supplemental.js"></script>
     <script src="https://unpkg.com/devextreme-cldr-data/de.js"></script>
-    <script src="https://unpkg.com/devextreme-cldr-data/ru.js"></script>
+    <script src="https://unpkg.com/devextreme-cldr-data/ru.js"></script>-->
 
     <link rel="stylesheet" href="./css/Sidenav.css">
     <link rel="stylesheet" href="./css/Lecture_Search.css">
@@ -29,11 +29,11 @@
     <script src="./js/Common.js"></script>
 </head>
 <body id="ProjectBody">
-    <nav id="topnav_id" class="navbar fixed-top navbar-expand-sm bg-dark navbar-dark d-flex">
+    <nav id="topnav_id" class="navbar fixed-top navbar-expand-sm navbar-dark d-flex" style="background-color: black;">
         <button class="navbar-toggler" style="float:left;" type="button" onclick="Sidenav_Show_Hide()">
             <span class="navbar-toggler-icon"></span>
         </button>&nbsp;&nbsp;&nbsp;
-        <a class="navbar-brand" style="float:left; font-size: 24px; font-weight: bold;">전자출결관리시스템</a>
+        <a class="navbar-brand" href="./main.html" id="main_title_id" style="float:left; font-size: 24px; font-weight: bold;">전자출결관리시스템</a>
         <div id="tmp_storage_id" hidden></div>
         <div class="ml-auto">
             <button class="btn btn-success bg-dark border-dark" onclick="Logout()">
@@ -65,16 +65,48 @@
 
     <div class="main_class">
         <div id="main_base_id">
-            <h2>메뉴를 선택했을 때, 컨텐츠가 디스플레이 되는 영역 !!</h2>
-            <br />
-            <p>메뉴를 선택하면 각 메뉴에 적합한 GUI가 나타나게 한다.</p>
-            <p>각 기능은 검색, 입력, 수정, 삭제 등이 가능할 수 있다.</p>
-            <p>검색 화면은 그래프, 테이블 등 가능한 시각적으로 판단하기 쉬운 방법을 택한다.</p>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div id="chart">
+
+                    </div>
+                </div>
+                <div class="col-sm-4" style="padding-top:15px;">
+                    <div class="card px-3 py-3">
+                        <h3 class="text-center">개설 강의</h3>
+                        <table class="table">
+                            <thead style="background-color: lightgray">
+                                <tr>
+                                    <th>과목명</th>
+                                    <th>교수</th>
+                                    <th>학생수</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboard_list_id">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row footer d-flex justify-content-center align-items-center" style="height: 50px; margin-bottom:0">
-        @2021 Footer
-    </div>
+    <script>
+        setTimeout(function () {
+            var a = $("#chart");
+            $("#chart").dxChart({
+                title: "Attendance Rate",
+                dataSource: global_class_att_average,
+                series: {
+                    argumentField: "className",
+                    valueField: "result",
+                    name: "Attendance rate",
+                    type: "bar",
+                    color: '#ffaa66',
+                    height: "400px"
+                }
+            });
+            Dash_Board_List_Lookup();
+        }, 300);
+    </script>
 </body>
 </html>

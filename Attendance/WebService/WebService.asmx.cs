@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Services;
 using Newtonsoft.Json.Linq;
 
+
 namespace Attendance.WebService
 {
     /// <summary>
@@ -196,7 +197,7 @@ namespace Attendance.WebService
         }
 
         [WebMethod]
-        public void Sch_Fix(string id, string classNo, string date, string time)
+        public void Sch_Fix(string classNo, string date, string time)
         {
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             SqlConnection con = new SqlConnection(cs);
@@ -206,7 +207,7 @@ namespace Attendance.WebService
             JObject json = new JObject();
             string status = "success";
 
-            string sql = "update classSchedule set classNo= '" + int.Parse(classNo) + "', date= '" + date + "', time= '" + time + "' where id=" + int.Parse(id);
+            string sql = "update classSchedule set classNo= '" + int.Parse(classNo) + "', date= '" + date + "', time= '" + time + "' where classNo=" + int.Parse(classNo)+" and date='"+ date + "'";
 
             cmd.CommandText = sql;
             cmd.CommandType = System.Data.CommandType.Text;
@@ -498,6 +499,103 @@ namespace Attendance.WebService
                 user_list.Add(obj);
             }
             json.Add("user_list", user_list);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Main_Dash_Board(string class_table)
+        {
+            JArray classtable = JArray.Parse(class_table);
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JObject json = new JObject();
+            JArray jobj = new JArray();
+            string status = "success";
+
+            string sql = "CREATE TABLE #tmp( " +
+                         "  className varchar(50), " +
+                         "  result float " +
+                         ") " +
+                         "DECLARE @class_name varchar(50) " +
+                         "DECLARE @total_att float " +
+                         "DECLARE @no_class float " +
+                         "DECLARE @no_classStudent float " +
+                         "DECLARE @result float ";
+            for(int i = 0; i < classtable.Count; i++)
+            {
+                sql += "select @class_name = className from class where no=" + classtable[i]["No"] + " " +
+                       "select " +
+                       "    @total_att = count(student_name) " +
+                       "from att_table " +
+                       "where classNo =" + classtable[i]["No"] + " and att ='Yes' " +
+                       "select " +
+                       "    @no_class = count(distinct date) " +
+                       "from att_table " +
+                       "where classNo=" + classtable[i]["No"] + " " +
+                       "select " +
+                       "    @no_classStudent = count(stu_identity) " +
+                       "from learner_table " +
+                       "where classNo=" + classtable[i]["No"] + " " +
+                       "set @result = @total_att / (@no_class * @no_classStudent ) * 100 " +
+                       "insert #tmp values (@class_name, @result) ";
+            }
+            sql += "select * from #tmp";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["className"] = rdr["className"].ToString();
+                obj["result"] = Math.Round(double.Parse(rdr["result"].ToString()));
+                jobj.Add(obj);
+            }
+
+            json.Add("status", status);
+            json.Add("items", jobj);
+            Context.Response.Write(json.ToString());
+        }
+
+        [WebMethod]
+        public void Dash_Board_List_Lookup()
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray dashboard_item = new JArray();
+            JObject json = new JObject();
+            string sql = 
+                         "select " +
+                         "  A.No, " +
+                         "  A.className, " +
+                         "  A.proFessor, "+
+                         "  stu_num = count(B.stu_identity) " +
+                         "from class as A " +
+                         "  left join Learner_Table as B " +
+                         "      on A.no = B.classNo " +
+                         "group by A.No, A.className, A.proFessor";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["No"] = rdr["No"].ToString();
+                obj["className"] = rdr["className"].ToString();
+                obj["proFessor"] = rdr["proFessor"].ToString();
+                obj["stu_num"] = rdr["stu_num"].ToString();
+                dashboard_item.Add(obj);
+            }
+            json.Add("dashboard_item", dashboard_item);
             Context.Response.Write(json.ToString());
         }
     }

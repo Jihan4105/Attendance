@@ -9,7 +9,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: black;
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -40,14 +40,6 @@
     margin-bottom: 20px;
     font-size: 20px; /* Increased text to enable scrolling */
     padding: 100px 20px;
-    background-color: #f7f9fe;
-}
-
-/* footer content */
-.footer {
-    margin-left: 200px; /* Same as the width of the sidenav */
-    background-color: #f7f9fe;
-    font-size: 16px;
 }
 
 /* Add an active class to the active dropdown button */

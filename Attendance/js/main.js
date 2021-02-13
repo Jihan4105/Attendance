@@ -1,4 +1,6 @@
 ﻿var global_sidenav_idTopPosition;
+var global_class_table;
+var global_class_att_average;
 
 $(function () {
     var myStorage = window.localStorage;
@@ -20,6 +22,30 @@ $(function () {
         }
     });
     $("#sidenav_id").css("margin-top", $("#topnav_id").outerHeight());
+    Lec_Lookup_For_DashBoard()
+        .done(function () {
+            var deferred = $.Deferred();
+            var obj = JSON.stringify(global_class_table);
+            $.ajax({
+                url: "./WebService/WebService.asmx/Main_Dash_Board",
+                data: {
+                    class_table : obj
+                },
+                dataType: "json",
+                method: "post",
+                success: function (result) {
+                    global_class_att_average = result.items;
+                    deferred.resolve(result);
+                },
+                error: function (result) {
+                    deferred.reject();
+                }
+            });
+            return deferred.promise();
+        })
+        .fail(function () {
+
+        })
 })();
 
 function Sidenav_Show_Hide() {
@@ -126,4 +152,49 @@ function Logout() {
     var myStorage = window.localStorage;
     myStorage.removeItem("AMS_user_email");
     $(location).attr('href', './index.html');
+}
+
+function Lec_Lookup_For_DashBoard() {
+    var deferred = $.Deferred();
+    $.ajax({
+        url: "./WebService/WebService.asmx/Lec_Lookup",
+        data: {},
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            global_class_table = result.items;
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
+        }
+    });
+    return deferred.promise();
+}
+
+function Dash_Board_List_Lookup() {
+    var deferred = $.Deferred();
+    $.ajax({
+        url: "./WebService/WebService.asmx/Dash_Board_List_Lookup",
+        data: {},
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            var html = "";
+            for (No in result.dashboard_item) {
+                html += '<tr>';
+                html += '<td>' + result.dashboard_item[No].className + '<span class="badge badge-info">Info</span></td>';
+                html += '<td>' + result.dashboard_item[No].proFessor + '</td>';
+                html += '<td>' + result.dashboard_item[No].stu_num + '</td>';
+                html += '</tr>';
+            }
+            $("#dashboard_list_id").empty();
+            $("#dashboard_list_id").append(html);
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
+        }
+    });
+    return deferred.promise();
 }

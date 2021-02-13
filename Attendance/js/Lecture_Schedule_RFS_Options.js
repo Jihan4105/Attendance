@@ -40,7 +40,7 @@ function Lec_Schedule_Lookup(no) {
             var html = "";
             for (classNo in result.scheduleitems) {
                 html += '<tr>';
-                html += '<td class="row-id">' + '<input class="schedulechk" name="schedulechk" type="checkbox" data-no="' + result.scheduleitems[classNo].classNo + '" data-date="' + result.scheduleitems[classNo].date + '" data-time="' + result.scheduleitems[classNo].time + '" data-id="' + result.scheduleitems[classNo].id + '" onchange="Auto_Inputbox_Edit(this)">' + '</td>';
+                html += '<td class="row-id">' + '<input id="schedulechk" class="schedulechk" name="schedulechk" type="checkbox" data-no="' + result.scheduleitems[classNo].classNo + '" data-date="' + result.scheduleitems[classNo].date + '" data-time="' + result.scheduleitems[classNo].time + '" data-id="' + result.scheduleitems[classNo].id + '" onchange="Auto_Inputbox_Edit(this)">' + '</td>';
                 html += '<td>' + result.scheduleitems[classNo].date + '</td>';
                 html += '<td>' + result.scheduleitems[classNo].time + '</td>';
                 html += '</tr>';
@@ -160,7 +160,7 @@ function Lec_Sch_Fix() {
         alert("시간을 넣어주세요!");
         return;
     }
-    Sch_Fix(global_chk_id, global_selected_chk_no, date, time)
+    Sch_Fix(global_selected_chk_no, date, time)
         .done(function () {
             alert("수정되었습니다!");
             Lec_Schedule_Lookup(no);
@@ -170,12 +170,11 @@ function Lec_Sch_Fix() {
         });
 }
 
-function Sch_Fix(global_chk_id, global_selected_chk_no, date, time) {
+function Sch_Fix(global_selected_chk_no, date, time) {
     var deferred = $.Deferred();
     $.ajax({
         url: "./WebService/WebService.asmx/Sch_Fix",
         data: {
-            id: global_chk_id,
             classNo: global_selected_chk_no,
             date: date,
             time: time
@@ -212,12 +211,12 @@ function Lec_Sch_Delete() {
         });
 }
 
-function Sch_Delete(global_chk_id) {
+function Sch_Delete(id) {
     var deferred = $.Deferred();
     $.ajax({
         url: "./WebService/WebService.asmx/Sch_Delete",
         data: {
-            id: global_chk_id
+            id: id
         },
         dataType: "json",
         method: "post",
