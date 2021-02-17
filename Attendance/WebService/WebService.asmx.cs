@@ -598,5 +598,42 @@ namespace Attendance.WebService
             json.Add("dashboard_item", dashboard_item);
             Context.Response.Write(json.ToString());
         }
+
+        [WebMethod]
+        public void Upping_Lecture_Lookup()
+        {
+            string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            SqlConnection con = new SqlConnection(cs);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            con.Open();
+            JArray upping_lecture = new JArray();
+            JObject json = new JObject();
+            string sql =
+                         "select " +
+                         "  A.className, " +
+                         "  A.proFessor, " +
+                         "  B.time " +
+                         "from class as A " +
+                         "  left join classSchedule as B " +
+                         "      on A.no = B.classNo " +
+                         "Where FORMAT(DATEADD(DAY, 1, GETDATE()), 'yyyy-MM-dd') = B.date " +
+                         "  or FORMAT(GETDATE(), 'yyyy-MM-dd') = B.date ";
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                JObject obj = new JObject();
+                obj["className"] = rdr["className"].ToString();
+                obj["proFessor"] = rdr["proFessor"].ToString();
+                obj["time"] = rdr["time"].ToString();
+                upping_lecture.Add(obj);
+            }
+            json.Add("upping_lecture", upping_lecture);
+            Context.Response.Write(json.ToString());
+        }
     }
 }

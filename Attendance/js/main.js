@@ -183,7 +183,7 @@ function Dash_Board_List_Lookup() {
             var html = "";
             for (No in result.dashboard_item) {
                 html += '<tr>';
-                html += '<td>' + result.dashboard_item[No].className + '<span class="badge badge-info">Info</span></td>';
+                html += '<td>' + result.dashboard_item[No].className + '</td>';
                 html += '<td>' + result.dashboard_item[No].proFessor + '</td>';
                 html += '<td>' + result.dashboard_item[No].stu_num + '</td>';
                 html += '</tr>';
@@ -197,4 +197,70 @@ function Dash_Board_List_Lookup() {
         }
     });
     return deferred.promise();
+}
+
+function Upping_Lecture_Lookup() {
+    $.ajax({
+        url: "./WebService/WebService.asmx/Upping_Lecture_Lookup",
+        data: {},
+        dataType: "json",
+        method: "post",
+        success: function (result) {
+            var html = "";
+            if (result.upping_lecture.length == 0) {
+                html += '<tr>';
+                html += '<td>오늘</td>';
+                html += '<td>X</td>';
+                html += '<td>X</td>';
+                html += '<td>X</td>';
+                html += '</tr>';
+                html += '<tr>';
+                html += '<td>내일</td>';
+                html += '<td>X</td>';
+                html += '<td>X</td>';
+                html += '<td>X</td>';
+                html += '</tr>';
+            }
+            else if (result.upping_lecture.length == 1) {
+                html += '<tr>';
+                html += '<td>오늘</td>';
+                html += '<td>' + result.upping_lecture[i].className + '</td>';
+                html += '<td>' + result.upping_lecture[i].proFessor + '</td>';
+                html += '<td>' + result.upping_lecture[i].time + '</td>';
+                html += '</tr>';
+                html += '<tr>';
+                html += '<td>내일</td>';
+                html += '<td>X</td>';
+                html += '<td>X</td>';
+                html += '<td>X</td>';
+                html += '</tr>';
+            }
+            else if (result.upping_lecture.length == 2) {
+                for (i = 0; i < result.upping_lecture.length; i++) {
+                    if (i == 0) {
+                        html += '<tr>';
+                        html += '<td>오늘</td>';
+                        html += '<td>' + result.upping_lecture[i].className + '</td>';
+                        html += '<td>' + result.upping_lecture[i].proFessor + '</td>';
+                        html += '<td>' + result.upping_lecture[i].time + '</td>';
+                        html += '</tr>';
+                    }
+                    else {
+                        html += '<tr>';
+                        html += '<td>내일</td>';
+                        html += '<td>' + result.upping_lecture[i].className + '</td>';
+                        html += '<td>' + result.upping_lecture[i].proFessor + '</td>';
+                        html += '<td>' + result.upping_lecture[i].time + '</td>';
+                        html += '</tr>';
+                    }
+                }
+            }
+            $("#upping_lecture_id").empty();
+            $("#upping_lecture_id").append(html);
+            deferred.resolve(result);
+        },
+        error: function (result) {
+            deferred.reject();
+        }
+    });
 }

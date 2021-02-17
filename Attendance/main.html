@@ -15,10 +15,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/20.2.5/css/dx.light.css" />
     <script src="https://cdn3.devexpress.com/jslib/20.2.5/js/dx.all.js"></script>
 
-    <!--<script src="https://unpkg.com/devextreme-cldr-data/supplemental.js"></script>
-    <script src="https://unpkg.com/devextreme-cldr-data/de.js"></script>
-    <script src="https://unpkg.com/devextreme-cldr-data/ru.js"></script>-->
-
     <link rel="stylesheet" href="./css/Sidenav.css">
     <link rel="stylesheet" href="./css/Lecture_Search.css">
     <script src="./js/Main.js"></script>
@@ -88,6 +84,31 @@
                     </div>
                 </div>
             </div>
+            <div class="px-3 py-3 my-5">
+                <div class="row">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card px-3 py-3">
+                            <h3 class="text-center">최근 강의</h3>
+                            <table class="table">
+                                <thead style="background-color: lightgray">
+                                    <tr>
+                                        <th>수업날짜</th>
+                                        <th>과목명</th>
+                                        <th>교수</th>
+                                        <th>시간</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="upping_lecture_id">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -106,6 +127,7 @@
                 }
             });
             Dash_Board_List_Lookup();
+            Upping_Lecture_Lookup();
         }, 300);
     </script>
 </body>
