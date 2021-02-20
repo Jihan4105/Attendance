@@ -1,5 +1,7 @@
-﻿<div id="register_div_id">
-    <h1>강의 등록</h1>
+﻿<div id="register_div_id" class="workarea">
+    <span class="sub_title">
+        강의등록
+    </span>
     <div class="form-group">
         <label for="usr">과목명:</label>
         <input type="text" class="form-control" id="register_subject_id" name="username">
@@ -12,5 +14,9 @@
         <label for="usr">강사:</label>
         <input type="text" class="form-control" id="register_professor_id" name="username">
     </div>
-    <button type="submit" class="btn btn-primary" onclick="Lec_Register_Button()">Submit</button>
+    <div class="d-flex">
+        <div class="ml-auto">
+            <button type="submit" class="btn btn-sm btn-primary" onclick="Lec_Register_Button()">Submit</button>
+        </div>
+    </div>
 </div>

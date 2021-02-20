@@ -1,13 +1,21 @@
-﻿<div id="stu_search_div_id">
-    <div>
-        <span class="searchspan">
-            학생검색
-        </span>
-        <button type="button" class="btn btn-danger" onclick="Stu_Delete_Button()" id="buttons_id">삭제</button>
-        <button type="button" class="btn btn-secondary" onclick="Stu_Update_Button()" id="buttons_id"">수정</button>
+﻿<div id="stu_search_div_id" class="workarea">
+    <div class="d-flex mb-3">
+        <div class="mr-auto">
+            <div>
+                <span class="sub_title">
+                    학생검색
+                </span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <button type="button" class="btn btn-sm btn-danger" onclick="Stu_Delete_Button()">Delete</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="Stu_Update_Button()">Update</button>
+            </div>
+        </div>
     </div>
     <div id="tablecontents">
-        <table class="table table-striped">
+        <table class="table table-sm  table-striped">
             <thead style="background-color: lightgray">
                 <tr>
                     <th>체크</th>

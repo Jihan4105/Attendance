@@ -77,6 +77,7 @@ function Show_Calender(where) {
     try {
         $(where).dxDateBox({
             location: "after",
+            width: '100%',
             widget: "dxDateBox",
             type: "date",
             displayFormat: "yyyy-MM-dd",

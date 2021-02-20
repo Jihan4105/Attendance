@@ -63,16 +63,28 @@
         <div id="main_base_id">
             <div class="row">
                 <div class="col-sm-8">
-                    <div id="chart">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div id="chart">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div id="pie">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="line_chart_id">
 
                     </div>
                 </div>
-                <div class="col-sm-4" style="padding-top:15px;">
-                    <div class="card px-3 py-3">
+                <div class="col-sm-4">
+                    <div class="card px-3 py-3 ">
                         <h3 class="text-center">개설 강의</h3>
-                        <table class="table">
-                            <thead style="background-color: lightgray">
-                                <tr>
+                        <table class="table table-sm">
+                            <thead class="py-2" style="background-color: lightgray">
+                                <tr class="py-2">
                                     <th>과목명</th>
                                     <th>교수</th>
                                     <th>학생수</th>
@@ -82,30 +94,20 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-            <div class="px-3 py-3 my-5">
-                <div class="row">
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="card px-3 py-3">
-                            <h3 class="text-center">최근 강의</h3>
-                            <table class="table">
-                                <thead style="background-color: lightgray">
-                                    <tr>
-                                        <th>수업날짜</th>
-                                        <th>과목명</th>
-                                        <th>교수</th>
-                                        <th>시간</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="upping_lecture_id">
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="card px-3 py-3 my-3">
+                        <h3 class="text-center">최근 강의</h3>
+                        <table class="table table-sm">
+                            <thead class="py-2" style="background-color: lightgray">
+                                <tr class="py-2">
+                                    <th>수업날짜</th>
+                                    <th>과목명</th>
+                                    <th>교수</th>
+                                    <th>시간</th>
+                                </tr>
+                            </thead>
+                            <tbody id="upping_lecture_id">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -115,7 +117,10 @@
         setTimeout(function () {
             var a = $("#chart");
             $("#chart").dxChart({
-                title: "Attendance Rate",
+                size: {
+                    height: 300
+                },
+                title: "과목별 출석률",
                 dataSource: global_class_att_average,
                 series: {
                     argumentField: "className",
@@ -124,8 +129,147 @@
                     type: "bar",
                     color: '#ffaa66',
                     height: "400px"
+                },
+                commonSeriesSettings: {
+                    label: {
+                        visible: true,
+                        format: {
+                            type: "fixedPoint",
+                            precision: 0
+                        },
+                        position: 'outside',
+                        verticalOffset: 15
+                    }
                 }
             });
+            var dataSource = [{
+                satisfaction: "매우 만족",
+                val: 5
+            }, {
+                satisfaction: "만족",
+                val: 15
+            }, {
+                satisfaction: "보통",
+                val: 5
+            }, {
+                satisfaction: "불만족",
+                val: 3
+            }, {
+                satisfaction: "매우 불만족",
+                val: 2
+            }];
+            $("#pie").dxPieChart({
+                size: {
+                    height: 300
+                },
+                type: "doughnut",
+                palette: "Soft Pastel",
+                dataSource: dataSource,
+                title: "강의 만족도",
+                tooltip: {
+                    enabled: true,
+                    format: "millions",
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.valueText + " - " + (arg.percent * 100).toFixed(2) + "%"
+                        };
+                    }
+                },
+                legend: {
+                    horizontalAlignment: "right",
+                    verticalAlignment: "top",
+                    margin: 0
+                },
+                series: [{
+                    argumentField: "satisfaction",
+                    label: {
+                        visible: true,
+                        connector: {
+                            visible: true
+                        }
+                    }
+                }]
+            });
+            $("#line_chart_id").dxChart({
+                palette: "Violet",
+                size: {
+                    height: 350
+                },
+                dataSource: [{
+                    test: "1학기 중간1",
+                    korean: 67,
+                    math: 58,
+                    english: 73,
+                    science: 60,
+                    koreaHistory: 45
+                }, {
+                    test: "1학기 중간2",
+                    korean: 72,
+                    math: 63,
+                    english: 75,
+                    science: 55,
+                    koreaHistory: 48
+                }, {
+                    test: "1학기 기말",
+                    korean: 78,
+                    math: 67,
+                    english: 68,
+                    science: 58,
+                    koreaHistory: 60
+                }, {
+                    test: "2학기 중간1",
+                    korean: 60,
+                    math: 56,
+                    english: 79,
+                    science: 62,
+                    koreaHistory: 51
+                }, {
+                    test: "2학기 중간2",
+                    korean: 75,
+                    math: 68,
+                    english: 75,
+                    science: 49,
+                    koreaHistory: 45
+                }, {
+                    test: "2학기 기말",
+                    korean: 67,
+                    math: 52,
+                    english: 70,
+                    science: 52,
+                    koreaHistory: 40
+                }],
+                commonSeriesSettings: {
+                    argumentField: "test"
+                },
+                margin: {
+                    bottom: 20
+                },
+                argumentAxis: {
+                    valueMarginsEnabled: false,
+                    discreteAxisDivisionMode: "crossLabels",
+                    grid: {
+                        visible: true
+                    }
+                },
+                series: [
+                    { valueField: "korean", name: "국어" },
+                    { valueField: "math", name: "수학" },
+                    { valueField: "english", name: "영어" },
+                    { valueField: "science", name: "과학" },
+                    { valueField: "koreaHistory", name: "한국사" }
+                ],
+                legend: {
+                    verticalAlignment: "bottom",
+                    horizontalAlignment: "center",
+                    itemTextPosition: "bottom"
+                },
+                title: {
+                    text: "시험성적 추이"
+                },
+                tooltip: {
+                    enabled: true
+                }
+            }).dxChart("instance");
             Dash_Board_List_Lookup();
             Upping_Lecture_Lookup();
         }, 300);

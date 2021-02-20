@@ -1,6 +1,5 @@
-﻿#buttons_id {
-    margin: 16px 5px 0px 5px;
-    float: right;
+﻿.buttons_class {
+    margin: 0px 5px 0px 5px;
 }
 
 .searchspan {
@@ -21,4 +20,13 @@ tr.colorchange:hover td {
 
 select option[disabled]:first-child{
     display: none;
+}
+
+.workarea {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.sub_title{
+    font-size: 28px;
 }

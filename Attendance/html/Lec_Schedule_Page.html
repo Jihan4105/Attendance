@@ -1,14 +1,20 @@
-﻿<div id="schedule_div_id">
-    <span style="font-size: 40px;">강의일정</span>
-    <div class="row">
-        <div class="col-sm-6 d-inline-flex">
+﻿<div id="schedule_div_id" class="workarea">
+    <div class="row d-flex mb-3">
+        <div class="col-sm-4 mr-auto">
+            <div>
+                <span class="sub_title">
+                    강의일정
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-4 d-inline-flex">
             <label style="width: 80px; font-size:24px;" for="usr">과목:</label>
-            <select class="form-control" id="sel1_id" name="sellist1" style="float:left" onchange="Lec_Class_Select(this)">
+            <select class="form-control" id="sel1_id" name="sellist1" onchange="Lec_Class_Select(this)">
             </select>
         </div>
     </div>
     <div id="tablecontents">
-        <table class="table table-striped">
+        <table class="table table-sm table-striped">
             <thead style="background-color: lightgray">
                 <tr>
                     <th>선택</th>
@@ -20,20 +26,22 @@
             </tbody>
         </table>
     </div>
-    <div class="row">
-        <div class="col-sm-4 d-inline-flex">
-            <label style="width: 80px;" for="usr">날짜:</label>
-            <div id="schedule_datepicker_id">
+    <div class="row d-flex flex-row-reverse">
+        <div class="row d-inline-flex">
+            <div class="col-sm-4 d-inline-flex justify-content-end">
+                <label style="width: 80px;" for="usr">날짜:</label>
+                <div id="schedule_datepicker_id">
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4 d-inline-flex">
-            <label style="width: 80px;" for="usr">시간:</label>
-            <input type="text" class="form-control" id="schedule_time_id">
-        </div>
-        <div class="col-sm-4">
-            <button type="button" class="btn btn-primary" onclick="Lec_Sch_Register()">등록</button>
-            <button type="button" class="btn btn-primary" onclick="Lec_Sch_Fix()">수정</button>
-            <button type="button" class="btn btn-primary" onclick="Lec_Sch_Delete()">삭제</button>
+            <div class="col-sm-4 d-inline-flex justify-content-end">
+                <label style="width: 80px;" for="usr">시간:</label>
+                <input type="text" class="form-control" id="schedule_time_id">
+            </div>
+            <div class="d-flex col-sm-4">
+                <button type="button" class="btn btn-sm btn-primary buttons_class" onclick="Lec_Sch_Register()">등록</button>
+                <button type="button" class="btn btn-sm btn-primary buttons_class" onclick="Lec_Sch_Fix()">수정</button>
+                <button type="button" class="btn btn-sm btn-primary buttons_class" onclick="Lec_Sch_Delete()">삭제</button>
+            </div>
         </div>
     </div>
 </div>

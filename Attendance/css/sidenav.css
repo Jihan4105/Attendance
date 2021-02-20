@@ -39,7 +39,7 @@
     margin-left: 200px; /* Same as the width of the sidenav */
     margin-bottom: 20px;
     font-size: 20px; /* Increased text to enable scrolling */
-    padding: 100px 20px;
+    padding: 80px 20px;
 }
 
 /* Add an active class to the active dropdown button */
